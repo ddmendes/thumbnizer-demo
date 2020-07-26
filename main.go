@@ -1,29 +1,13 @@
 package main
 
 import (
-	"log"
-
+	"github.com/ddmendes/thumbnizer-demo/controller"
 	"github.com/gin-gonic/gin"
 )
 
-type ThumbnizerPayload struct {
-	UUID    string
-	Picture string
-	Output  string
-}
-
 func main() {
+	control := controller.NewController()
 	r := gin.Default()
-	r.POST("/thumbnizer/", thumbnizerHandler)
+	r.POST("/thumbnizer/", control.GetThumbnizerHandler())
 	r.Run()
-}
-
-func thumbnizerHandler(c *gin.Context) {
-	var payload ThumbnizerPayload
-	err := c.BindJSON(&payload)
-	if err != nil {
-		log.Panic(err)
-	}
-	log.Println(payload)
-	c.JSON(200, payload)
 }
